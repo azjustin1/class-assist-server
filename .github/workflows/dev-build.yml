@@ -13,7 +13,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm ci
-      - run: npm run build
+      - name: Build project
+        run:  |
+          npm ci
+          npm run build
+      - name: SonarQube Scan
+        uses: sonarsource/sonaqube-scan-action@master
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+          SONAR_HOST_URL: ${{secrets.SONAR_HOST_URL}}
