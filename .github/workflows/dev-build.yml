@@ -5,6 +5,12 @@ name: Build NestJS package
 
 on:
   push:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: The release version
+        required: true
+        default: 1.0.0
 jobs:
   build:
     runs-on: self-hosted
