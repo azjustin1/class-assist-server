@@ -47,15 +47,10 @@ export class JwtAuthGuard extends AuthGuard(['jwt']) {
     return true;
   }
 
-  handleRequest(err, user, info) {
-    if (err || !user) {
-      throw err || new UnauthorizedException();
-    }
-    return user;
-  }
-
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    if (request.cookies && request.cookies.access_token) {
+      return request.cookies.access_token;
+    }
+    return undefined;
   }
 }
