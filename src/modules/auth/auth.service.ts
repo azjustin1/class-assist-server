@@ -1,17 +1,11 @@
-import {
-  HttpCode,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  SetMetadata,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { isNull } from 'lodash';
-import { UserService } from '../user/user.service';
-import { User } from '../user/entity/user.entity';
 import { UserDTO } from '../user/dto/user.dto';
+import { User } from '../user/entity/user.entity';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -37,16 +31,14 @@ export class AuthService {
     return user;
   }
 
-  async signIn(user: User): Promise<any> {
+  async signIn(user: User): Promise<string | null> {
     if (user === null) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      return null;
     }
     const payload = { sub: user.id, username: user.username };
-    return {
-      access_token: await this.jwtService.signAsync(payload, {
-        secret: this.configService.get<string>('auth.secret'),
-        expiresIn: this.configService.get<string>('auth.expireIn'),
-      }),
-    };
+    return await this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>('auth.secret'),
+      expiresIn: this.configService.get<string>('auth.expireIn'),
+    });
   }
 }
