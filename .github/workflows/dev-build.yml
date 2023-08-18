@@ -27,7 +27,7 @@ jobs:
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         with:
-          projectBaseDir: /github/workspace/class-assist-server
+          projectBaseDir: /workspace/class-assist-server/class-assist-server
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
