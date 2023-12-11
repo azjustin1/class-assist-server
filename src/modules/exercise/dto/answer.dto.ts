@@ -1,4 +1,5 @@
 export interface AnswerDTO {
   content: string;
-  isCorrect: boolean;
+  quizId: number;
+  point: number;
 }

@@ -52,6 +52,7 @@ export class UserService {
     newUser.username = userDTO.username;
     const salt = await bcrypt.genSalt(SALT);
     const hash = await bcrypt.hash(userDTO.password, salt);
+    newUser.email = userDTO.email;
     newUser.phone = userDTO.phone;
     newUser.password = hash;
     return await this.userRepository.save(newUser);

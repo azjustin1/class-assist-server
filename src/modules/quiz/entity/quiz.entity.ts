@@ -1,6 +1,8 @@
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -9,6 +11,7 @@ import { QuizType } from '../enum/quiz-type.enum';
 import { Choice } from './choice.entity';
 import { Exercise } from 'src/modules/exercise/entity/exercise.entity';
 import { CommonEntity } from 'src/common/entity/base-entity.entity';
+import { Answer } from './answer.entity';
 
 @Entity()
 export class Quiz extends CommonEntity {
@@ -18,7 +21,7 @@ export class Quiz extends CommonEntity {
   @Column()
   question: string;
 
-  @ManyToOne(() => Exercise, (exercise) => exercise.quizzes)
+  @ManyToMany(() => Exercise, (exercise) => exercise.quizzes)
   exercise: Exercise;
 
   @OneToMany(() => Choice, (answer) => answer.quiz, {
@@ -27,6 +30,15 @@ export class Quiz extends CommonEntity {
   })
   choices: Choice[];
 
+  @ManyToMany(() => Answer)
+  @JoinTable({
+    name: 'quiz_answer'
+  })
+  answers: Answer[];
+
   @Column()
   type: QuizType;
+
+  @Column()
+  correctAnswer: string = '';
 }

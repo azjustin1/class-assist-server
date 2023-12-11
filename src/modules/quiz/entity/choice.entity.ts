@@ -1,17 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Quiz } from "./quiz.entity";
+import { CommonEntity } from 'src/common/entity/base-entity.entity';
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { Quiz } from './quiz.entity';
 
 @Entity()
-export class Choice {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Choice extends CommonEntity {
   @Column()
   content: string;
 
-  @Column()
-  isCorrect: boolean;
-
   @ManyToOne(() => Quiz, (quiz) => quiz.choices)
-  quiz: Quiz
+  quiz: Quiz;
 }

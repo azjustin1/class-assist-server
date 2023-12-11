@@ -4,7 +4,7 @@ import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 import { Public } from './jwt-auth.guard';
 import { LocalAuthGuard } from './local-auth.guard';
-@Controller('rest/auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(
     private authService: AuthService,

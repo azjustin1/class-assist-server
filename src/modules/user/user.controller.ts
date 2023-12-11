@@ -3,7 +3,7 @@ import { JwtAuthGuard, Public } from '../auth/jwt-auth.guard';
 import { UserDTO } from './dto/user.dto';
 import { UserService } from './user.service';
 
-@Controller('rest/users')
+@Controller('api/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -13,7 +13,7 @@ export class UserController {
     return this.userService.create(userDTO);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Public()
   @Get()
   getAllUser() {
     return this.userService.findAll();

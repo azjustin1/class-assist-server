@@ -80,7 +80,6 @@ export class AuthService {
         secret: this.configService.get<string>('auth.secret'),
       });
     } catch (error) {
-      console.log(error);
       throw new CustomException(error, 190);
     }
   }

@@ -1,3 +1,6 @@
+import { Exclude } from 'class-transformer';
+import { IsEmail } from 'class-validator';
+import { Role } from 'src/modules/role/entity/role.entity';
 import {
   Column,
   Entity,
@@ -5,10 +8,6 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserDTO } from '../dto/user.dto';
-import { Exclude } from 'class-transformer';
-import { Role } from 'src/modules/role/entity/role.entity';
-import { IsEmail } from 'class-validator';
 
 @Entity()
 export class User {
@@ -29,8 +28,10 @@ export class User {
   @Column()
   phone: string;
 
-  @Column()
-  refreshToken: string;
+  @Column({
+    nullable: true
+  })
+  refreshToken?: string;
 
   @OneToOne(() => Role)
   @JoinColumn()
