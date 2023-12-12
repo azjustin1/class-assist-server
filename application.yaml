@@ -7,9 +7,10 @@ database:
   host: 'localhost'
   port: 3306
   username: 'root'
-  password: 'admin'
+  password: 'root'
   database: 'class_assist'
 
 auth:
-  expireIn: '60s'
+  accessTokenExpire: '5s'
+  refreshTokenExpire: '60s'
   secret: 'This is a very secret string'
