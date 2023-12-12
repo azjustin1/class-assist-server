@@ -13,7 +13,6 @@ export class UserController {
     return this.userService.create(userDTO);
   }
 
-  @Public()
   @Get()
   getAllUser() {
     return this.userService.findAll();

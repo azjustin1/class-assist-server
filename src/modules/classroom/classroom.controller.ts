@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ClassroomService } from './classroom.service';
 import { CreateClassroomDto } from './dto/create-classroom.dto';
 import { UpdateClassroomDto } from './dto/update-classroom.dto';
+import { Public } from '../auth/jwt-auth.guard';
 
-@Controller('classroom')
+@Controller('api/classroom')
 export class ClassroomController {
   constructor(private readonly classroomService: ClassroomService) {}
 
@@ -12,6 +13,7 @@ export class ClassroomController {
     return this.classroomService.create(createClassroomDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.classroomService.findAll();

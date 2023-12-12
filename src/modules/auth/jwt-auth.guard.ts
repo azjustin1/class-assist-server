@@ -9,6 +9,7 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
+import { User } from '../user/entity/user.entity';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
@@ -32,7 +33,7 @@ export class JwtAuthGuard extends AuthGuard(['jwt']) {
       return true;
     }
     const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
+    const token = request.cookies['accessToken'];
     if (!token) {
       throw new UnauthorizedException();
     }
@@ -40,11 +41,11 @@ export class JwtAuthGuard extends AuthGuard(['jwt']) {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.get<string>('auth.secret'),
       });
-      request['user'] = payload;
+      request.user = payload;
     } catch {
       throw new UnauthorizedException();
     }
-    return true;
+    return request;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {

@@ -74,13 +74,15 @@ export class AuthService {
     this.usersService.updateUserRefreshToken(userId, refreshToken);
   }
 
-  public async validateRefreshToken(userId: number, refreshToken: string) {
+  public async generateAccessTokenFromRefreshToken(refreshToken: string) {
     try {
-      const payload = await this.jwtService.verifyAsync(refreshToken, {
+
+      const payload = await this.jwtService.verify(refreshToken, {
         secret: this.configService.get<string>('auth.secret'),
       });
+      return this.generateAccessToken(payload.userId)
     } catch (error) {
-      throw new CustomException(error, 190);
+      return null;
     }
   }
 }

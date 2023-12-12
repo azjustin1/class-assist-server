@@ -1,15 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { CreateClassroomDto } from './dto/create-classroom.dto';
 import { UpdateClassroomDto } from './dto/update-classroom.dto';
+import { Classroom } from './entities/classroom.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
+import { User } from '../user/entity/user.entity';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class ClassroomService {
-  create(createClassroomDto: CreateClassroomDto) {
-    return 'This action adds a new classroom';
+  constructor(
+    @Inject(REQUEST) private readonly request: Request,
+
+    @InjectRepository(Classroom)
+    private classroomRepository: Repository<Classroom>,
+
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {}
+
+  async create(createClassroomDto: CreateClassroomDto) {
+    const newClassroom = new Classroom();
+    newClassroom.name = createClassroomDto.name;
+    const createdUser = await this.userRepository.findOne({
+      where: { id: (this.request.user as User).id },
+    });
+    newClassroom.createdUser = createdUser;
+    console.log(newClassroom);
+    return await this.classroomRepository.save(newClassroom);
+  }
+
+  async addNewStudent(name: string) {
+
   }
 
   findAll() {
-    return `This action returns all classroom`;
+    return this.classroomRepository.find();
   }
 
   findOne(id: number) {

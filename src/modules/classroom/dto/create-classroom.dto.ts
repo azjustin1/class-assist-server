@@ -1,1 +1,3 @@
-export class CreateClassroomDto {}
+export class CreateClassroomDto {
+  name: string
+}
