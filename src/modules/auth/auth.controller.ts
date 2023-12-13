@@ -16,7 +16,6 @@ export class AuthController {
     @Request() request,
     @Res({ passthrough: true }) response: Response,
   ): Promise<void> {
-    console.log(request.user);
     const user = request.user;
     const accessToken = await this.authService.generateAccessToken(user.id);
     const refreshToken = this.authService.generateRefreshToken(user.id);
@@ -40,7 +39,6 @@ export class AuthController {
       const refreshToken = request.cookies['refreshToken'];
       const accessToken =
         await this.authService.generateAccessTokenFromRefreshToken(refreshToken);
-        console.log(accessToken)
       if (accessToken === null) {
         response.status(401);
       }

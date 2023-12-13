@@ -11,6 +11,6 @@ database:
   database: 'class_assist'
 
 auth:
-  accessTokenExpire: '5s'
-  refreshTokenExpire: '60s'
+  accessTokenExpire: '300s'
+  refreshTokenExpire: '86400s'
   secret: 'This is a very secret string'

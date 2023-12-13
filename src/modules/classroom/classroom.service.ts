@@ -27,7 +27,6 @@ export class ClassroomService {
       where: { id: (this.request.user as User).id },
     });
     newClassroom.createdUser = createdUser;
-    console.log(newClassroom);
     return await this.classroomRepository.save(newClassroom);
   }
 

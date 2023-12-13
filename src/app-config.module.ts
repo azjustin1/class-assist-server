@@ -9,6 +9,7 @@ import { ExerciseController } from './modules/exercise/exercise.controller';
 import { ExerciseModule } from './modules/exercise/exercise.module';
 import { ResultModule } from './modules/result/result.module';
 import { ClassroomModule } from './modules/classroom/classroom.module';
+import { FolderModule } from './modules/folder/folder.module';
 
 const SYSTEM_MODULES = [UserModule, RoleModule, QuizModule, ExerciseModule];
 
@@ -24,6 +25,7 @@ const SYSTEM_MODULES = [UserModule, RoleModule, QuizModule, ExerciseModule];
     ExerciseModule,
     ResultModule,
     ClassroomModule,
+    FolderModule,
   ],
   exports: [],
   controllers: [ExerciseController],
